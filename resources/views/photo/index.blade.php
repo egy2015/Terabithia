@@ -4,7 +4,7 @@
     <div class="row mt-5 mb-5">
         <div class="col-lg-12 margin-tb">
             <div class="float-left">
-                <h2>Ceritanya Halaman Index</h2>
+                <h2>Ceritanya Halaman Index Foto</h2>
             </div>
             <div class="float-right">
                 <a class="btn btn-success" href="{{ route('photo.create') }}"> Create Post</a>
@@ -21,17 +21,15 @@
     <table class="table table-bordered">
         <tr>
             <th width="20px" class="text-center">No</th>
-            <th>Title</th>
-            <th>Harga</th>
             <th>ID</th>
+            <th>Preview</th>
             <th width="280px"class="text-center">Action</th>
         </tr>
         @foreach ($photo as $post)
         <tr>
             <td class="text-center">{{ ++$i }}</td>
-            <td>{{ $post->title }}</td>
-            <td>{{ $post->price}}</td>
-            <td>{{$post->id}}</td>
+            <td>{{ $post->id }}</td>
+            <td> <img src="{{ asset('img/album/' . $post->filename) }}" width="200px"></td>
             <td class="text-center">
                 <form action="{{ route('photo.destroy',$post->id) }}" method="POST">
                     @csrf
@@ -44,6 +42,6 @@
         @endforeach
     </table>
  
-    {!! $posts->links() !!}
+    {!! $photo->links() !!}
  
 @endsection

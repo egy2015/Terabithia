@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Photo extends Migration
+class CreateTransactionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,15 @@ class Photo extends Migration
      */
     public function up()
     {
-        Schema::create('photo', function (Blueprint $table) {
+        Schema::create('transaction', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('posts_id');
-            $table->string('filename');
-            $table->boolean('is_default');
+            $table->string('uuid');
+            $table->string('name');
+            $table->string('email');
+            $table->string('phone');
+            $table->string('address');
+            $table->integer('transaction_total');
+            $table->string('transaction_status');
 
             $table->softDeletes();
             $table->timestamps();
@@ -31,6 +35,6 @@ class Photo extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('photo');
+        Schema::dropIfExists('transaction');
     }
 }

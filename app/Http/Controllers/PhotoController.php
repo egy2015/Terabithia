@@ -29,7 +29,7 @@ class PhotoController extends Controller
      */
     public function create()
     {
-        //
+        return view('photo.create');
     }
 
     /**
@@ -40,7 +40,16 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = new Photo;
+        if($request->file('filename')){
+            $file = $request->file('filename');
+            $nama_file = time().str_replace(" ", "", $file->getClientOriginalName());
+            $file->move('img/album', $nama_file);
+            $data->filename = $nama_file;
+        }
+        $data->save();
+
+        return redirect('photo')->with('success', "Data berhasil disimpan");
     }
 
     /**
@@ -83,8 +92,11 @@ class PhotoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Photo $photo)
     {
-        //
+        $photo->delete();
+  
+        return redirect()->route('photo.index')
+                        ->with('success','Data berhasil dimusnahkan!');
     }
 }

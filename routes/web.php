@@ -17,21 +17,14 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__.'/auth.php';
+
 use App\Http\Controllers\DataController;
 Route::resource('posts', DataController::class);
 
-//photo
-
 use App\Http\Controllers\PhotoController;
 Route::resource('photo', PhotoController::class);
-
-//endphoto
-
-
-//jetstream
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
-
-//endjetstream
