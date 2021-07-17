@@ -1,4 +1,4 @@
-@extends('template')
+@extends('layouts.template')
  
 @section('content')
     <div class="row mt-5 mb-5">
