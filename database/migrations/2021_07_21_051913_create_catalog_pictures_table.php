@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePictureTable extends Migration
+class CreateCatalogPicturesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePictureTable extends Migration
      */
     public function up()
     {
-        Schema::create('picture', function (Blueprint $table) {
+        Schema::create('catalog_pictures', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('posts_id');
+            $table->integer('catalogs_id');
             $table->string('filename');
             $table->boolean('is_default');
 
@@ -31,6 +31,6 @@ class CreatePictureTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('picture');
+        Schema::dropIfExists('catalog_pictures');
     }
 }

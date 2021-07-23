@@ -1,9 +1,13 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Models\Catalog;
 use Illuminate\Http\Request;
+use App\Http\Requests\CatalogRequest;
+use Illuminate\Support\Str;
+use App\Models\CatalogPicture;
 
 class CatalogController extends Controller
 {
@@ -32,23 +36,12 @@ class CatalogController extends Controller
         return view('catalogs.create');
     }
 
-    public function store(Request $request, $data)
+    public function store(CatalogRequest $request)
     {
-        /// membuat validasi untuk title dan content wajib diisi
-        $request->validate([
-            'name' => 'required',
-            'type' => 'required',
-            'price' => 'required',
-            'quantity' => 'required',
-        ]);
+        $request['slug'] = Str::slug($request->name);
+        $request = $request->all(); 
+        Catalog::create($request);
 
-
-
-        /// insert setiap request dari form ke dalam database via model
-        /// jika menggunakan metode ini, maka nama field dan nama form harus sama
-        Post::create($request->all());
-
-        /// redirect jika sukses menyimpan data
         return redirect()->route('catalogs.index')
             ->with('success', 'Data Berhasil Ditambahkan');
     }
@@ -58,39 +51,46 @@ class CatalogController extends Controller
         /// dengan menggunakan resource, kita bisa memanfaatkan model sebagai parameter
         /// berdasarkan id yang dipilih
         /// href="{{ route('catalogs.show',$post->id) }}
-        return view('catalogs.show', compact('post'));
+        ///return view('catalogs.show', compact('post'));
     }
 
-    public function edit(Catalog $post)
+    public function edit($id)
     {
-        /// dengan menggunakan resource, kita bisa memanfaatkan model sebagai parameter
-        /// berdasarkan id yang dipilih
-        /// href="{{ route('catalogs.edit',$post->id) }}
+        $post = Catalog::findOrFail($id);
         return view('catalogs.edit', compact('post'));
     }
 
-    public function update(Request $request, Catalog $post)
+    public function update(CatalogRequest $request, $id)
     {
-        /// membuat validasi untuk title dan content wajib diisi
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-        ]);
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->name);
+ 
+        $item = Catalog::findOrFail($id);  
+        $item->update($data);
 
-        /// mengubah data berdasarkan request dan parameter yang dikirimkan
-        $post->update($request->all());
-
-        /// setelah berhasil mengubah data
         return redirect()->route('catalogs.index')
             ->with('success', 'Mantap dah bisa update');
     }
 
-    public function destroy(Catalog $post)
+    public function destroy($id)
     {
         /// melakukan hapus data berdasarkan parameter yang dikirimkan
+        $post = Catalog::findOrFail($id);
         $post->delete();
+
+        CatalogPicture::where('id', $id)->delete();
 
         return redirect()->route('catalogs.index')
             ->with('success', 'Data berhasil dimusnahkan!');
+    }
+
+    public function pictures(Request $request, $id)
+    {
+        $catalogs = Catalog::findorFail($id);
+        $items = CatalogPicture::with('catalog')
+            ->where('catalogs_id', $id)
+            ->get();
+
+        return view('catalogs.picture', compact('catalogs','items'));
     }
 }

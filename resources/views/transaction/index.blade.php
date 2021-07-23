@@ -1,14 +1,15 @@
 @extends('layouts.template')
 
 @section('content')
+
+
+
     <div class="card row mt-5 mb-5">
         <div class="card-header bg-primary text-white col-lg-12 margin-tb">
             <div class="float-left">
-                <h2>Index Catalog</h2>
+                <h2>Data Transaksi</h2>
             </div>
-            {{-- <div class="float-right">
-                <a class="btn btn-success" href="{{ route('catalogs.create') }}"> Create Post</a>
-            </div> --}}
+
         </div>
     </div>
 
@@ -17,7 +18,6 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-
     <div class="card-body">
         <table class="table table-bordered">
             <tr class="bg-light text-dark">
@@ -29,7 +29,7 @@
                 <th>Unit</th>
                 <th width="280px" class="text-center">Action</th>
             </tr>
-            @forelse ($catalogs as $post)
+            @foreach ($catalogs as $post)
                 <tr>
                     <td class="text-center">{{ ++$i }}</td>
                     <td>{{ $post->id }}</td>
@@ -40,7 +40,7 @@
                     <td class="text-center">
                         <form action="{{ route('catalogs.destroy', $post->id) }}" method="POST">
 
-                            <a class="btn btn-info btn-sm" href="{{ url('catalogs/'. $post->id.'/picture') }}">Foto</a>
+                            <a class="btn btn-info btn-sm" href="{{ route('catalogs.show', $post->id) }}">Foto</a>
 
                             <a class="btn btn-primary btn-sm" href="{{ route('catalogs.edit', $post->id) }}">Edit</a>
 
@@ -52,13 +52,7 @@
                         </form>
                     </td>
                 </tr>
-                @empty
-                <tr>
-                  <td colspan="7" class="text-center bg-secondary p-5">
-                    <strong>Data tidak tersedia</strong>
-                  </td>
-                </tr>
-            @endforelse
+            @endforeach
         </table>
     </div>
     {!! $catalogs->links() !!}

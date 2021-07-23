@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\PictureController;
+use App\Http\Controllers\TransactionController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,30 +19,44 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-
+//kepalabiawak__ Halaman utama Tanpa Parameter
 Route::get('/', function () {
-    return view('auth.login');
+    return view('home');
 });
+//endkepalabiawak__
 
+//satpol
 Auth::routes();
+//endsatpol
+
+//Route Catalog
+Route::get('catalogs/{id}/picture', [CatalogController::class, 'pictures'])    //ada kelas tambahan
+    ->name('catalogs.pictures');
+Route::resource('catalogs', CatalogController::class);      //route dengan satu resource tujuan controller si catalog
+//endroute catalog
 
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-use App\Http\Controllers\CatalogController;
-Route::resource('catalogs', CatalogController::class);
-
-use App\Http\Controllers\PictureController;
-Route::resource('picture', PictureController::class);
+Route::resource('picture', PictureController::class);       //route dengan satu resource tujuan controller si picture
 
 //transaction
 
-Route::get('/transactions', function () {
-    // Users must confirm their password before continuing...
-})->middleware(['auth', 'password.confirm']);
-
-use App\Http\Controllers\TransactionController;
 Route::resource('transactions', TransactionController::class);
 
 //endtrx
+
+
+// Route::get('/', 'DashboardController@index')->name('dashboard');
+
+// Auth::routes(['register' => false]);
+
+// Route::get('products/{id}/gallery', 'ProductController@gallery')
+//     ->name('products.gallery');
+// Route::resource('products', 'ProductController');
+
+// Route::resource('product-galleries', 'ProductGalleryController');
+
+// Route::get('transactions/{id}/set-status', 'TransactionController@setStatus')
+//     ->name('transactions.status');
+// Route::resource('transactions', 'TransactionController');

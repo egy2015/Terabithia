@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -12,9 +13,19 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
      public function index()
     {
-        //
+        $catalogs = Transaction::latest()->paginate(5);
+
+        /// mengirimkan variabel $catalogs ke halaman views catalogs/index.blade.php
+        /// include dengan number index
+        return view('transaction.index', compact('catalogs'))
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**

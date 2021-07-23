@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Exists;
 
-class CatalogRequest extends FormRequest
+class PictureRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +25,9 @@ class CatalogRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'type' => 'required|max:255',
-            'description' => 'required',
-            'price' => 'required|integer',
-            'quantity' => 'required|integer',
+            'catalogs_id' => 'required|integer|exists:catalogs,id',
+            'filename' => 'required|image',
+            'is_default' => 'boolean'
         ];
     }
 }
