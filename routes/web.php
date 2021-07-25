@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\TransactionController;
 
@@ -20,9 +21,12 @@ use App\Http\Controllers\TransactionController;
 
 
 //kepalabiawak__ Halaman utama Tanpa Parameter
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home.');
+// });
+
+Route::get('/', [HomeController::class, 'index'])    //ada kelas tambahan
+    ->name('home');
 //endkepalabiawak__
 
 //satpol
@@ -45,18 +49,3 @@ Route::resource('picture', PictureController::class);       //route dengan satu 
 Route::resource('transactions', TransactionController::class);
 
 //endtrx
-
-
-// Route::get('/', 'DashboardController@index')->name('dashboard');
-
-// Auth::routes(['register' => false]);
-
-// Route::get('products/{id}/gallery', 'ProductController@gallery')
-//     ->name('products.gallery');
-// Route::resource('products', 'ProductController');
-
-// Route::resource('product-galleries', 'ProductGalleryController');
-
-// Route::get('transactions/{id}/set-status', 'TransactionController@setStatus')
-//     ->name('transactions.status');
-// Route::resource('transactions', 'TransactionController');

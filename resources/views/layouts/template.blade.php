@@ -5,10 +5,10 @@
 
     <title>Ceritanya Halaman Index - SimpleDataParser</title>
     <link rel="icon" href="{!! asset('img/icon.png') !!}" />
-     {{-- Style --}}
-     @stack('before-style')
-     @include('includes.style')
-     @stack('after-style')
+    {{-- Style --}}
+    @stack('before-style')
+    @include('includes.style')
+    @stack('after-style')
     <link rel="stylesheet" href="{{ URL::asset('css/style.css') }} ">
     <link rel="stylesheet" href="{{ URL::asset('css/stisla.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/stislacomponent.css') }}">
@@ -23,7 +23,7 @@
 <body>
 
     <div id='wrapper'>
-        <div class="main-sidebar bg-dark">
+        <div class="card main-sidebar bg-dark">
             <aside id="sidebar-wrapper">
 
                 <div class="login-brand">
@@ -38,18 +38,23 @@
                 <div class="container">
                     <h3>Barang</h3>
                     <ul style="list-style-type:none">
-                        <li><a href="{{ route('catalogs.index') }}" class="nav-link">Lihat Barang<a></li>
-                        <li><a href="{{ route('catalogs.create') }}" class="nav-link">Tambah Barang</a></li>
+                        <li><a href="{{ route('catalogs.index') }}" class="text-white"><i
+                                    class="fa fa-eye">&nbsp;</i>Lihat Barang<a></li>
+                        <li><a href="{{ route('catalogs.create') }}" class="text-white"><i
+                                    class="fa fa-plus">&nbsp;</i>Tambah Barang</a></li>
                     </ul>
                     <h3>Foto Barang</h3>
                     <ul style="list-style-type:none">
-                        <li><a class="nav-link" href="{{ route('picture.index') }}">Lihat Data Foto</a></li>
-                        <li><a class="nav-link" href="{{ route('picture.create') }}">Tambah Foto Produk</a></li>
+                        <li><a class="text-white" href="{{ route('picture.index') }}"><i
+                                    class="fa fa-eye">&nbsp;</i>Lihat Data Foto</a></li>
+                        <li><a class="text-white" href="{{ route('picture.create') }}"><i
+                                    class="fa fa-plus">&nbsp;</i>Tambah Foto Produk</a></li>
                     </ul>
 
                     <h3>Data Transaksi</h3>
                     <ul style="list-style-type:none">
-                        <li><a class="nav-link" href="{{ route('transactions.index') }}"> Lihat Transaksi</a></li>
+                        <li><a class="text-white" href="{{ route('transactions.index') }}"><i
+                                    class="fa fa-eye">&nbsp;</i>Lihat Transaksi</a></li>
                     </ul>
                 </div>
 
@@ -65,7 +70,9 @@
 
                                 {{ __('Log Out') }} |
                                 <u>
-                                        {{ Auth::user()->name }}
+                                    @isset(Auth::user()->name)
+                                    {{ Auth::user()->name }}
+                                    @endisset
                                 </u>
 
                             </button>
@@ -98,10 +105,10 @@
 
     <!-- Menu Toggle Script -->
 
-        {{-- Script --}}
-        @stack('before-script')
-        @include('includes.script')
-        @stack('after-script')
+    {{-- Script --}}
+    @stack('before-script')
+    @include('includes.script')
+    @stack('after-script')
 </body>
 
 </html>

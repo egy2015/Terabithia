@@ -22,39 +22,71 @@
         <table class="table table-bordered">
             <tr class="bg-light text-dark">
                 <th width="20px" class="text-center">#</th>
-                <th>ID</th>
+                <th>ID TRX</th>
                 <th>Nama</th>
-                <th>Jenis Produk</th>
-                <th>Harga</th>
-                <th>Unit</th>
+                <th>Email</th>
+                <th>Nomor</th>
+                <th>Total Transaksi</th>
+                <th>Status</th>
                 <th width="280px" class="text-center">Action</th>
             </tr>
-            @foreach ($catalogs as $post)
+            @forelse ($items as $item)
                 <tr>
                     <td class="text-center">{{ ++$i }}</td>
-                    <td>{{ $post->id }}</td>
-                    <td>{{ $post->name }}</td>
-                    <td>{{ $post->type }}</td>
-                    <td>Rp.{{ $post->price }}</td>
-                    <td>{{ $post->quantity }} pcs</td>
-                    <td class="text-center">
-                        <form action="{{ route('catalogs.destroy', $post->id) }}" method="POST">
-
-                            <a class="btn btn-info btn-sm" href="{{ route('catalogs.show', $post->id) }}">Foto</a>
-
-                            <a class="btn btn-primary btn-sm" href="{{ route('catalogs.edit', $post->id) }}">Edit</a>
-
+                    <td>{{ $item->id }}</td>
+                    <td>{{ $item->name }}</td>
+                    <td>{{ $item->email }}</td>
+                    <td>{{ $item->phone }}</td>
+                    <td>${{ $item->transaction_total }}</td>
+                    <td>
+                        @if ($item->transaction_status == 'PENDING')
+                            <span class="badge bg-info">
+                            @elseif($item->transaction_status == 'SUCCESS')
+                                <span class="badge badge-success">
+                                @elseif($item->transaction_status == 'FAILED')
+                                    <span class="badge badge-warning">
+                                    @else
+                                        <span>
+                        @endif
+                        {{ $item->transaction_status }}
+                        </span>
+                    </td>
+                    <td>
+                        @if ($item->transaction_status == 'PENDING')
+                            <a href="{{ route('transactions.status', $item->id) }}?status=SUCCESS"
+                                class="btn btn-success btn-sm">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <a href="{{ route('transactions.status', $item->id) }}?status=FAILED"
+                                class="btn btn-warning btn-sm">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        @endif
+                        <a href="#mymodal" data-remote="{{ route('transactions.show', $item->id) }}" data-toggle="modal"
+                            data-target="#mymodal" data-title="Detail Transaksi {{ $item->uuid }}"
+                            class="btn btn-info btn-sm">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        <a href="{{ route('transactions.edit', $item->id) }}" class="btn btn-primary btn-sm">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <form action="{{ route('transactions.destroy', $item->id) }}" method="post" class="d-inline">
                             @csrf
-                            @method('DELETE')
-
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                            @method('delete')
+                            <button class="btn btn-danger btn-sm">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </form>
                     </td>
                 </tr>
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="8" class="text-center bg-secondary p-5">
+                        <strong>Data tidak tersedia</strong>
+                    </td>
+                </tr>
+            @endforelse
         </table>
     </div>
-    {!! $catalogs->links() !!}
 
 @endsection

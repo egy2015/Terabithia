@@ -1,8 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\CatalogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('catalogs', [CatalogController::class, 'all']);
+Route::post('checkout', 'API\CheckoutController@checkout');
+Route::get('transactions/{id}', 'API\TransactionController@get');

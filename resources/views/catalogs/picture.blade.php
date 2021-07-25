@@ -30,8 +30,6 @@
                     <th width="280px" class="text-center">Action</th>
                 </tr>
 
-
-{{dd($catalogs)}}
                 <tr>
                     <td class="text-center">{{ $catalogs->id }}</td>
                     <td>{{ $catalogs->catalog->name }}</td>
@@ -50,7 +48,7 @@
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger btn-lg">
-                                Hapus
+                                <i class="fa fa-trash"></i>
                             </button>
                         </form>
                     </td>

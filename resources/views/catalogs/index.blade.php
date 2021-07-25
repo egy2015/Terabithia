@@ -40,15 +40,15 @@
                     <td class="text-center">
                         <form action="{{ route('catalogs.destroy', $post->id) }}" method="POST">
 
-                            <a class="btn btn-info btn-sm" href="{{ url('catalogs/'. $post->id.'/picture') }}">Foto</a>
+                            <a class="btn btn-info btn-sm" href="{{ url('catalogs/'. $post->id.'/picture') }}"><i class="fa fa-eye"></i></a>
 
-                            <a class="btn btn-primary btn-sm" href="{{ route('catalogs.edit', $post->id) }}">Edit</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('catalogs.edit', $post->id) }}"><i class="fa fa-pencil"></i></a>
 
                             @csrf
                             @method('DELETE')
 
                             <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">Delete</button>
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"><i class="fa fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>
